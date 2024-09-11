@@ -5,20 +5,33 @@ from django.db import models
 
 
 class Teacher(models.Model):
-    teacherID = models.SmallIntegerField(primary_key= True)
+    teacherID = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length= 255)
     phoneNo = models.BigIntegerField()
     position = models.CharField(max_length= 255)
 
 
 class Student(models.Model):
-    regNo = models.SmallIntegerField(primary_key= True)
+    regNo = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length= 255)
     rollNo = models.SmallIntegerField()
     phoneNo = models.BigIntegerField()
     address = models.CharField(max_length= 255)
     sem = models.SmallIntegerField()
-    classStudying = models.CharField()
+    classStudying = models.CharField(max_length=10)
+    upiId = models.CharField(max_length= 255)
+
+
+class Group(models.Model):
+    groupId = models.BigAutoField(primary_key= True)      #Dont need to define but kar raha hu mkc
+    groupName = models.CharField(max_length=255)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='groups')
+    students = models.ManyToManyField(Student, related_name='groups')
+    
+class Seller(models.Model):
+    seller_ID = models.BigAutoField(primary_key= True)
+    name = models.CharField(max_length=100)
+    contact_info = models.CharField(max_length=100)
 
 
 class Announcement(models.Model):
@@ -45,7 +58,7 @@ class SharingIsCaringStore(models.Model):
 class Stationary(models.Model):
     itemName = models.CharField(max_length= 255)
     price = models.DecimalField(max_digits= 6, decimal_places= 2)
-    buyer = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_bought_from_stationary', null=True, blank=True) #It should return all the books that are being bought from the stationary by a particular student
+    #seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='stationery_items') It should return all the books that are being bought from the stationary by a particular student
 
 
 class ToDoList(models.Model):
