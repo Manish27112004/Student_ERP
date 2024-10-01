@@ -15,11 +15,25 @@ class Student(models.Model):
     regNo = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length= 255)
     rollNo = models.SmallIntegerField()
-    phoneNo = models.BigIntegerField()
+    phoneNo = models.CharField(max_length=10, default="None")
     address = models.CharField(max_length= 255)
-    sem = models.SmallIntegerField()
-    classStudying = models.CharField(max_length=10)
-    upiId = models.CharField(max_length= 255)
+    YEAR_CHOICES = [
+        ('FE', 'First Year'),
+        ('SE', 'Second Year'),
+        ('TE', 'Third Year'),
+        ('BE', 'Fourth Year'),
+    ]
+    DIVISION_CHOICES = [(i, f"Division {i}") for i in range(1, 9)]    #8 sem hota ha engineering ma
+    year = models.CharField(max_length=2, choices=YEAR_CHOICES, default='FE')
+    division = models.IntegerField(choices=DIVISION_CHOICES, default=1)
+    UPI_HANDLE_CHOICES = [
+        ('@oksbi', '@oksbi'),
+        ('@okhdfc', '@okhdfc'),
+        ('@okicici', '@okicici'),
+        ('@okaxis', '@okaxis'),
+        ]
+    upiId = models.CharField(max_length=50)  # For UPI ID before the '@'
+    upiHandle = models.CharField(max_length=10, choices=UPI_HANDLE_CHOICES, default='@oksbi')
 
 
 class Group(models.Model):

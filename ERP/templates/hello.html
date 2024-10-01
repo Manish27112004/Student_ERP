@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papa MKC</title>
+    <title>Student ERP</title>
 </head>
 <body>
-    <h1>Toh hello Baccho!!!</h1>
+    <div class="profile-container">
+        <h1>Student Profile</h1>
+        
+        <!-- <div class="profile-picture">
+            {% if student.profile_picture %}
+                <img src="{{ student.profile_picture.url }}" alt="{{ student.first_name }}'s Profile Picture">
+            {% else %}
+                <img src="{% static 'images/default_profile.jpg' %}" alt="Default Profile Picture">
+            {% endif %}
+        </div> -->
+
+        <!-- <div class="profile-details"> -->
+            <p><strong>First Name:</strong> {{ Student.name }}</p>
+            <!-- <p><strong>Last Name:</strong> {{ student.last_name }}</p>
+            <p><strong>Age:</strong> {{ student.age }}</p>
+            <p><strong>Email:</strong> <a href="mailto:{{ student.email }}">{{ student.email }}</a></p>
+        </div> -->
+    </div>
+
 </body>
 </html>

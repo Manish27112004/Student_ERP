@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
 
-    path('hello/', views.say_truth)
+    path('home/', views.say_truth)
     # Dont Need 'playground/hello' as already defined in storefronts "urls.py"
+   
 ]
