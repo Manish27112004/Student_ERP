@@ -3,27 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student ERP</title>
+    <title>Student List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <div class="profile-container">
-        <h1>Student Profile</h1>
-        
-        <!-- <div class="profile-picture">
-            {% if student.profile_picture %}
-                <img src="{{ student.profile_picture.url }}" alt="{{ student.first_name }}'s Profile Picture">
-            {% else %}
-                <img src="{% static 'images/default_profile.jpg' %}" alt="Default Profile Picture">
-            {% endif %}
-        </div> -->
 
-        <!-- <div class="profile-details"> -->
-            <p><strong>First Name:</strong> {{ Student.name }}</p>
-            <!-- <p><strong>Last Name:</strong> {{ student.last_name }}</p>
-            <p><strong>Age:</strong> {{ student.age }}</p>
-            <p><strong>Email:</strong> <a href="mailto:{{ student.email }}">{{ student.email }}</a></p>
-        </div> -->
-    </div>
+    <h1>Student List</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Reg No</th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Phone No</th>
+                <th>Address</th>
+                <th>Year</th>
+                <th>Division</th>
+                <th>UPI ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.regNo }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.rollNo }}</td>
+                <td>{{ student.phoneNo }}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.year }}</td> 
+                <td>{{ student.division }}</td>
+                <td>{{ student.upiId }}{{ student.upiHandle }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No students found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </body>
 </html>

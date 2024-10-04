@@ -1,14 +1,28 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Django automatically creates an id field in every model class and sets it as the primary key by default.
 #The Parent Class Should be above the base class but if you cant do that pass the args as 'String'
 
 
+class StudentProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+class TeacherProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 class Teacher(models.Model):
     teacherID = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length= 255)
-    phoneNo = models.BigIntegerField()
+    phoneNo = models.CharField(max_length= 255)
     position = models.CharField(max_length= 255)
+
+    def __str__(self) -> str:                 #For returning the name of the teacher instead of original object string representation
+        return self.name
+    
+    class Meta:                               #For Sorting the table according to the teachers ID
+        ordering = ['teacherID']
 
 
 class Student(models.Model):
@@ -35,9 +49,15 @@ class Student(models.Model):
     upiId = models.CharField(max_length=50)  # For UPI ID before the '@'
     upiHandle = models.CharField(max_length=10, choices=UPI_HANDLE_CHOICES, default='@oksbi')
 
+    def __str__(self) -> str:
+        return self.name
+    
+    class Meta:
+        ordering = ['regNo']
+
 
 class Group(models.Model):
-    groupId = models.BigAutoField(primary_key= True)      #Dont need to define but kar raha hu mkc
+    groupId = models.BigAutoField(primary_key= True)      
     groupName = models.CharField(max_length=255)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='groups')
     students = models.ManyToManyField(Student, related_name='groups')
@@ -51,8 +71,9 @@ class Seller(models.Model):
 class Announcement(models.Model):
     announcement = models.CharField(max_length= 255)
     timestamp = models.DateTimeField(auto_now_add= True)
+    enddate = models.DateField(blank=True, null=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='announcements')
-    
+
 
 class Calender(models.Model):
     event = models.CharField(max_length= 255)
@@ -78,5 +99,5 @@ class Stationary(models.Model):
 class ToDoList(models.Model):
     taskID = models.SmallIntegerField()
     taskName = models.CharField(max_length= 255)
-
+    student = models.OneToOneField(Student, on_delete=models.CASCADE)    #Each student has 1 TodoList
 
