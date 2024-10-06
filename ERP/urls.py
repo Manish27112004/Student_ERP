@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/', views.user_login, name="login"),
     path('register/', views.register_student, name="sregister"),
     # Dont Need 'playground/hello' as already defined in storefronts "urls.py"
-
-    
-      
+    path('todo/', views.todo_list, name='todo_list'),
+    path('todo/toggle/<int:task_id>/', views.toggle_task_completion, name='toggle_task_completion'),
+    path('todo/delete/<int:task_id>/', views.delete_task, name='delete_task'),
 ]

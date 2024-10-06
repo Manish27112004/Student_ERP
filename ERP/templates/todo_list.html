@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List for {{ todo_list.user.username }}</h1>
+
+<ul>
+    {% for task in tasks %}
+    <li>
+        <!-- Display the task name and its completion status -->
+        Task: {{ task.taskName }} - 
+        {% if task.completed %}
+            <strong>Completed</strong>
+        {% else %}
+            <strong>Incomplete</strong>
+        {% endif %}
+
+        <!-- Links to toggle completion status and delete the task -->
+        <a href="{% url 'toggle_task_completion' task.taskID %}">Toggle Completion</a> |
+        <a href="{% url 'delete_task' task.taskID %}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- If there are no tasks -->
+{% if not tasks %}
+    <p>No tasks available. Add one below!</p>
+{% endif %}
+
+<!-- Form to add a new task -->
+<h2>Add a New Task</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Task</button>
+</form>
+
+</body>
+</html>

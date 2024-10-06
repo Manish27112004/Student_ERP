@@ -82,7 +82,7 @@ class SharingIsCaringStore(models.Model):
     price = models.SmallIntegerField()
     bookName = models.CharField(max_length= 255)
     image = models.ImageField(upload_to='images/')  # Customize the upload path...This argument specifies the directory within your media root where uploaded images will be saved. You'll need to configure your media settings in settings.py
-    seller = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_sold')
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='books_sold')
     buyer = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_bought', null=True, blank=True)
 
 
@@ -93,7 +93,16 @@ class Stationary(models.Model):
 
 
 class ToDoList(models.Model):
-    taskID = models.SmallIntegerField()
-    taskName = models.CharField(max_length= 255)
-    student = models.OneToOneField(Student, on_delete=models.CASCADE)    #Each student has 1 TodoList
+    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True, blank=True)  # Link to the User model
 
+    def __str__(self):
+        return f"To-Do List for {self.user.username}"
+    
+class Task(models.Model):
+    taskID = models.AutoField(primary_key=True)
+    todo_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE, related_name='tasks')  # A task belongs to a to-do list
+    taskName = models.CharField(max_length=255)
+    completed = models.BooleanField(default=False)  # Mark task as completed or not
+
+    def __str__(self):
+        return self.taskName
