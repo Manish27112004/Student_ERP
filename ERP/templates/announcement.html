@@ -1,0 +1,20 @@
+<h1>Your Groups</h1>
+<ul>
+    {% for group in groups %}
+        <li>{{ group.groupName }}</li>
+    {% endfor %}
+</ul>
+
+<h1>Group Announcements</h1>
+<ul>
+    {% for announcement in announcements %}
+        <li>
+            <strong>{{ announcement.announce }}</strong> 
+            (Posted by {{ announcement.teacher.name }} in {{ announcement.group.groupName }} on {{ announcement.timestamp }})
+        </li>
+    {% endfor %}
+</ul>
+
+{% if not announcements %}
+    <p>No announcements found.</p>
+{% endif %}

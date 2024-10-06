@@ -17,7 +17,12 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(models.Seller)
 class SellerAdmin(admin.ModelAdmin):
-    list_display = ['seller_ID', 'name', 'contact_info']
+    list_display = ['sellerID', 'name', 'contact_info']
+
+
+@admin.register(models.Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = ['announce', 'timestamp', 'enddate']
 
 
 

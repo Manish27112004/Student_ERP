@@ -55,20 +55,21 @@ class Student(models.Model):
 class Group(models.Model):
     groupId = models.BigAutoField(primary_key= True)      
     groupName = models.CharField(max_length=255)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='groups')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher_groups')
     students = models.ManyToManyField(Student, related_name='groups')
     
 class Seller(models.Model):
-    seller_ID = models.BigAutoField(primary_key= True)
+    sellerID = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length=100)
     contact_info = models.CharField(max_length=100)
 
 
 class Announcement(models.Model):
-    announcement = models.CharField(max_length= 255)
+    announce = models.CharField(max_length= 255)
     timestamp = models.DateTimeField(auto_now_add= True)
     enddate = models.DateField(blank=True, null=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='announcements')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher_announcements')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE,null=True, blank=True, related_name='announcements')  # Link announcement to a group
 
 
 class Calender(models.Model):

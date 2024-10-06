@@ -12,4 +12,5 @@ urlpatterns = [
     path('todo/', views.todo_list, name='todo_list'),
     path('todo/toggle/<int:task_id>/', views.toggle_task_completion, name='toggle_task_completion'),
     path('todo/delete/<int:task_id>/', views.delete_task, name='delete_task'),
+    path('announcement/', views.user_groups_announcements)
 ]

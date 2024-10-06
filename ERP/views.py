@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from StudentManagement.models import ToDoList, Task
 from StudentManagement.forms import TaskForm
+from StudentManagement.models import Group, Announcement
 
 @login_required
 def say_truth(request):
@@ -113,3 +114,22 @@ def delete_task(request, task_id):
     task = get_object_or_404(Task, taskID=task_id)
     task.delete()
     return redirect('todo_list')
+
+
+def user_groups_announcements(request):
+    # Get the logged-in user
+    user = request.user
+
+    # Get the groups the user belongs to (assuming the user is a student)
+    groups = Group.objects.filter(students=user.student)
+
+    # Get announcements for these groups
+    announcements = Announcement.objects.filter(group__in=groups).order_by('-timestamp')
+
+    # Pass the groups and announcements to the template
+    context = {
+        'groups': groups,
+        'announcements': announcements,
+    }
+
+    return render(request, 'announcement.html', context)
