@@ -5,8 +5,9 @@ from . import views
 
 
 urlpatterns = [
-    path('todo/', views.todo),
-    path('home/', views.say_truth)
+    path('home/', views.say_truth, name="home"),
+    path('login/', views.user_login, name="login"),
+    path('register/', views.register_student, name="sregister"),
     # Dont Need 'playground/hello' as already defined in storefronts "urls.py"
 
     

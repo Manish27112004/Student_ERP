@@ -16,9 +16,5 @@ class GroupAdmin(admin.ModelAdmin):
     filter_horizontal = ('students',)  # Use a horizontal filter to select multiple students
 
 
-@admin.register(models.ToDoList)
-class ToDoAdmin(admin.ModelAdmin):
-    list_display = ['taskID', 'taskName']
-
      
     

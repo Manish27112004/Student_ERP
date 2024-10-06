@@ -5,14 +5,9 @@ from django.contrib.auth.models import User
 #The Parent Class Should be above the base class but if you cant do that pass the args as 'String'
 
 
-class StudentProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-
-class TeacherProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,  related_name="teacher")
     teacherID = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length= 255)
     phoneNo = models.CharField(max_length= 255)
@@ -26,6 +21,7 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,  related_name="student")
     regNo = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length= 255)
     rollNo = models.SmallIntegerField()
