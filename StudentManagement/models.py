@@ -57,11 +57,27 @@ class Group(models.Model):
     groupName = models.CharField(max_length=255)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher_groups')
     students = models.ManyToManyField(Student, related_name='groups')
+
+    def __str__(self):
+        return self.groupName
     
 class Seller(models.Model):
     sellerID = models.BigAutoField(primary_key= True)
     name = models.CharField(max_length=100)
     contact_info = models.CharField(max_length=100)
+    UPI_HANDLE_CHOICES = [
+        ('@oksbi', '@oksbi'),
+        ('@okhdfc', '@okhdfc'),
+        ('@okicici', '@okicici'),
+        ('@okaxis', '@okaxis'),
+        ]
+    upiId = models.CharField(max_length=50)  # For UPI ID before the '@'
+    upiHandle = models.CharField(max_length=10, choices=UPI_HANDLE_CHOICES, default='@oksbi',null=True, blank=True)
+
+
+
+    def __str__(self):
+        return self.name
 
 
 class Announcement(models.Model):
@@ -82,15 +98,17 @@ class Calender(models.Model):
 class SharingIsCaringStore(models.Model):
     price = models.SmallIntegerField()
     bookName = models.CharField(max_length= 255)
-    image = models.ImageField(upload_to='images/')  # Customize the upload path...This argument specifies the directory within your media root where uploaded images will be saved. You'll need to configure your media settings in settings.py
-    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='books_sold')
-    buyer = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_bought', null=True, blank=True)
+    price = models.DecimalField(max_digits= 6, decimal_places= 2)
+    image = models.ImageField(upload_to='item_images/')  # Customize the upload path...This argument specifies the directory within your media root where uploaded images will be saved. You'll need to configure your media settings in settings.py
+    seller = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_sold')
+    #buyer = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_bought', null=True, blank=True)
 
 
 class Stationary(models.Model):
     itemName = models.CharField(max_length= 255)
     price = models.DecimalField(max_digits= 6, decimal_places= 2)
-    #seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='stationery_items') It should return all the books that are being bought from the stationary by a particular student
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='stationery_items',null=True, blank=True) #It should return all the books that are being bought from the stationary by a particular student
+    image = models.ImageField(upload_to='item_images/', blank=True, null=True)
 
 
 class ToDoList(models.Model):

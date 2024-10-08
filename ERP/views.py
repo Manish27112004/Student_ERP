@@ -2,14 +2,13 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q,F                        #for OR operations
 from django.http import HttpResponse
-from StudentManagement.models import Student
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from StudentManagement.models import ToDoList, Task
+from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, SharingIsCaringStore
 from StudentManagement.forms import TaskForm
-from StudentManagement.models import Group, Announcement
+
 
 @login_required
 def say_truth(request):
@@ -133,3 +132,18 @@ def user_groups_announcements(request):
     }
 
     return render(request, 'announcement.html', context)
+
+
+def seller_items_view(request):
+    # Fetch all stationary items along with their sellers
+    items = Stationary.objects.select_related('seller').all()
+    
+    context = {
+        'items': items,
+    }
+    return render(request, 'seller_items.html', context)
+
+
+def store_view(request):
+    items = SharingIsCaringStore.objects.all()  # Get all items in the store
+    return render(request, 'store_items.html', {'items': items})

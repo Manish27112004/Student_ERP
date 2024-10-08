@@ -10,7 +10,7 @@
     {% for announcement in announcements %}
         <li>
             <strong>{{ announcement.announce }}</strong> 
-            (Posted by {{ announcement.teacher.name }} in {{ announcement.group.groupName }} on {{ announcement.timestamp }})
+            (Posted by {{ announcement.teacher.name }} in {{ announcement.group.groupName }} on {{ announcement.timestamp }} it ends on {{announcement.enddate}})
         </li>
     {% endfor %}
 </ul>

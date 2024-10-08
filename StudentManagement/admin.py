@@ -24,6 +24,16 @@ class SellerAdmin(admin.ModelAdmin):
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ['announce', 'timestamp', 'enddate']
 
+@admin.register(models.Stationary)
+class StationaryAdmin(admin.ModelAdmin):
+    list_display = ['itemName', 'price', 'seller']
+
+
+@admin.register(models.SharingIsCaringStore)
+class SharingIsCaringStoreAdmin(admin.ModelAdmin):
+    list_display = ['bookName','price','seller']
+
+
 
 
      
