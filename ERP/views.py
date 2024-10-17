@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, SharingIsCaringStore
-from StudentManagement.forms import TaskForm
+from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, SharingIsCaringStore, Teacher
+from StudentManagement.forms import TaskForm, GroupForm
+from django.core.exceptions import PermissionDenied
 
 
 @login_required
@@ -147,3 +148,37 @@ def seller_items_view(request):
 def store_view(request):
     items = SharingIsCaringStore.objects.all()  # Get all items in the store
     return render(request, 'store_items.html', {'items': items})
+
+
+@login_required
+def create_group(request):
+    try:
+        # Check if the user has a related teacher object
+        teacher = request.user.teacher
+    except Teacher.DoesNotExist:
+        # If the user is not a teacher, raise a permission error or handle accordingly
+        raise PermissionDenied("You are not authorized to create a group because you are not a teacher.")
+    
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            group = form.save(commit=False)
+            group.teacher = teacher  # Assign the logged-in teacher to the group
+            group.save()
+            form.save_m2m()  # Save the many-to-many field (students)
+            return redirect('group_list')
+    else:
+        form = GroupForm()
+    
+    return render(request, 'create_group.html', {'form': form})
+
+
+@login_required
+def group_list(request):
+    try:
+        teacher = request.user.teacher  # Get the teacher associated with the current user
+        groups = Group.objects.filter(teacher=teacher)  # Filter groups created by this teacher
+    except Teacher.DoesNotExist:
+        groups = []  # If the user is not a teacher, return an empty list or handle as needed
+    
+    return render(request, 'group_list.html', {'groups': groups})

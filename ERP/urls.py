@@ -15,4 +15,6 @@ urlpatterns = [
     path('announcement/', views.user_groups_announcements),
     path('Stationary/', views.seller_items_view),
     path('store/', views.store_view, name='store_view'),
+    path('create-group/', views.create_group, name='create_group'),
+    path('group-list/', views.group_list, name='group_list'),  # Add this URL pattern
 ]

@@ -1,0 +1,10 @@
+<h2>Groups Created by {{ request.user.teacher.name }}</h2>
+<ul>
+  {% if groups %}
+    {% for group in groups %}
+      <li>{{ group.groupName }}</li>
+    {% endfor %}
+  {% else %}
+    <li>No groups found.</li>
+  {% endif %}
+</ul>

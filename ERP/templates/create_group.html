@@ -1,0 +1,5 @@
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form -->
+    <button type="submit">Create Group</button>
+</form>
