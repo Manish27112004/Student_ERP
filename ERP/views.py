@@ -7,7 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
 from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, SharingIsCaringStore, Teacher
-from StudentManagement.forms import TaskForm, GroupForm
+from StudentManagement.forms import TaskForm, GroupForm, AnnouncementForm
 from django.core.exceptions import PermissionDenied
 
 
@@ -182,3 +182,20 @@ def group_list(request):
         groups = []  # If the user is not a teacher, return an empty list or handle as needed
     
     return render(request, 'group_list.html', {'groups': groups})
+
+
+@login_required
+def create_announcement(request):
+    teacher = request.user.teacher  # Get the teacher associated with the logged-in user
+    
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST, teacher=teacher)  # Pass teacher to the form
+        if form.is_valid():
+            announcement = form.save(commit=False)
+            announcement.teacher = teacher  # Link the announcement to the logged-in teacher
+            announcement.save()
+            return redirect('group_list')  # Redirect after successful creation
+    else:
+        form = AnnouncementForm(teacher=teacher)  # Pass teacher to the form
+    
+    return render(request, 'create_announcement.html', {'form': form})

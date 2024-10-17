@@ -17,4 +17,5 @@ urlpatterns = [
     path('store/', views.store_view, name='store_view'),
     path('create-group/', views.create_group, name='create_group'),
     path('group-list/', views.group_list, name='group_list'),  # Add this URL pattern
+    path('create-announcement/', views.create_announcement, name='create_announcement'),
 ]

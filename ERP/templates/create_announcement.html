@@ -1,0 +1,25 @@
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',  // Set your preferred date format
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+    </script>
+
+
+<h2>Create Announcement for {{ group.groupName }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form -->
+    <button type="submit">Create Announcement</button>
+</form>
+</head>
+</html>
