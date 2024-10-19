@@ -95,7 +95,7 @@ class Calender(models.Model):
     students = models.ManyToManyField(Student, related_name='events_viewable')
 
 
-class SharingIsCaringStore(models.Model):
+class BookIssueStore(models.Model):
     price = models.SmallIntegerField()
     bookName = models.CharField(max_length= 255)
     price = models.DecimalField(max_digits= 6, decimal_places= 2)
@@ -108,6 +108,7 @@ class Stationary(models.Model):
     itemName = models.CharField(max_length= 255)
     price = models.DecimalField(max_digits= 6, decimal_places= 2)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='stationery_items',null=True, blank=True) #It should return all the books that are being bought from the stationary by a particular student
+    category = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to='item_images/', blank=True, null=True)
 
 

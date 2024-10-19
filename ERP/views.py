@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, SharingIsCaringStore, Teacher
+from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, BookIssueStore, Teacher
 from StudentManagement.forms import TaskForm, GroupForm, AnnouncementForm
 from django.core.exceptions import PermissionDenied
 
@@ -135,20 +135,25 @@ def user_groups_announcements(request):
     return render(request, 'announcement.html', context)
 
 
-def seller_items_view(request):
-    # Fetch all stationary items along with their sellers
-    items = Stationary.objects.select_related('seller').all()
+def seller_items(request):
+    # Group items by category (assuming category is stored as a CharField)
+    items_by_category = {}
     
-    context = {
-        'items': items,
-    }
-    return render(request, 'seller_items.html', context)
+    # Get all distinct categories
+    categories = Stationary.objects.values_list('category', flat=True).distinct()
+
+    for category in categories:
+        # Get items for each category
+        category_items = Stationary.objects.filter(category=category)
+        items_by_category[category] = category_items
+    
+    # Pass the grouped items to the template
+    return render(request, 'seller_items.html', {'items_by_category': items_by_category})
 
 
 def store_view(request):
-    items = SharingIsCaringStore.objects.all()  # Get all items in the store
+    items = BookIssueStore.objects.all()  # Get all items in the store
     return render(request, 'store_items.html', {'items': items})
-
 
 @login_required
 def create_group(request):
@@ -199,3 +204,7 @@ def create_announcement(request):
         form = AnnouncementForm(teacher=teacher)  # Pass teacher to the form
     
     return render(request, 'create_announcement.html', {'form': form})
+
+@login_required
+def baseTemplate(request):
+    return render(request, 'index.html')

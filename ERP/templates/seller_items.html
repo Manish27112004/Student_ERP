@@ -1,35 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
+
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .item-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .item-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .item-price {
+            font-size: 16px;
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .seller-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: #218838;
+        }
+
+        .no-image {
+            font-style: italic;
+            color: #999;
+        }
+
+    </style>
 </head>
 <body>
+
     <h1>Items for Sale</h1>
-    <table border="1">
-        <tr>
-            <th>Item Image</th>
-            <th>Item Name</th>
-            <th>Price</th>
-            <th>Seller Name</th>
-            <th>Seller Contact</th>
-            <th>UPI ID</th>
-        </tr>
-        {% for item in items %}
-        <tr>
-            <td>
-                {% if item.image %}
-                    <img src="{{ item.image.url }}" alt="{{ item.itemName }}" width="100" height="100">
-                {% else %}
-                    <p>No Image</p>
-                {% endif %}
-            </td>
-            <td>{{ item.itemName }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.seller.name }}</td>
-            <td>{{ item.seller.contact_info }}</td>
-            <td>{{ item.seller.upiId }}</td>
-        </tr>
+
+    <div class="container">
+        {% for category, category_items in items_by_category.items %}
+        <div class="category">
+            <h2 class="category-title">{{ category }}</h2> <!-- Display the category name -->
+            <div class="items-container">
+                {% for item in category_items %}
+                <div class="item-card">
+                    <div class="item-image">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.itemName }}">
+                        {% else %}
+                            <p class="no-image">No Image Available</p>
+                        {% endif %}
+                    </div>
+                    <div class="item-name">{{ item.itemName }}</div>
+                    <div class="item-price">Price: ₹{{ item.price }}</div>
+                    <div class="seller-info">
+                        Seller: {{ item.seller.name }}<br>
+                        Contact: {{ item.seller.contact_info }}<br>
+                        UPI ID: {{ item.seller.upiId }}
+                    </div>
+                    <button class="buy-btn">Buy Now</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
         {% endfor %}
-    </table>
+    </div>
+
 </body>
 </html>

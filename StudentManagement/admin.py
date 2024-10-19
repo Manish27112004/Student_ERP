@@ -29,8 +29,8 @@ class StationaryAdmin(admin.ModelAdmin):
     list_display = ['itemName', 'price', 'seller']
 
 
-@admin.register(models.SharingIsCaringStore)
-class SharingIsCaringStoreAdmin(admin.ModelAdmin):
+@admin.register(models.BookIssueStore)
+class BookIssueStoreAdmin(admin.ModelAdmin):
     list_display = ['bookName','price','seller']
 
 

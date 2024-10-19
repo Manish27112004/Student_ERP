@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sharing Is Caring Store</title>
+    <title>Seller Items</title>
 </head>
 <body>
     <h1>Items for Sale</h1>
     <table border="1">
         <tr>
             <th>Item Image</th>
-            <th>Book Name</th>
+            <th>Item Name</th>
             <th>Price</th>
             <th>Seller Name</th>
+            <th>Seller Contact</th>
+            <th>UPI ID</th>
         </tr>
         {% for item in items %}
         <tr>
             <td>
                 {% if item.image %}
-                    <img src="{{ item.image.url }}" alt="{{ item.bookName }}" width="100" height="100">
+                    <img src="{{ item.image.url }}" alt="{{ item.itemName }}" width="100" height="100">
                 {% else %}
                     <p>No Image</p>
                 {% endif %}
             </td>
             <td>{{ item.bookName }}</td>
             <td>{{ item.price }}</td>
-            <td>{{ item.seller.name }}</td> 
+            <td>{{ item.seller.name }}</td>
+            <td>{{ item.seller.phoneNo }}</td>
+            <td>{{ item.seller.upiId }}</td>
         </tr>
         {% endfor %}
     </table>
-</body>
-</html>
