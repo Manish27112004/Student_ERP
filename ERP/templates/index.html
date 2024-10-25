@@ -361,13 +361,13 @@ a {
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li>
-                            <a href="#" class="nav__link">Home</a>
+                            <a href="{% url 'user_groups_announcements' %}" class="nav__link">Home</a>
                         </li>
 
                         <!--=============== DROPDOWN 1 ===============-->
                         <li class="dropdown__item">                      
                             <div class="nav__link dropdown__button">
-                                Discover <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                                Team <i class="ri-arrow-down-s-line dropdown__arrow"></i>
                             </div>
 
                             <div class="dropdown__container">
@@ -579,8 +579,9 @@ a {
             </nav>
 
         </header>
-        <main>
-                {% block content %}{% endblock %}
+        <main class="container my-4">
+                {% block content %}
+                {% endblock %}
 
         </main>
         

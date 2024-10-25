@@ -1,20 +1,14 @@
 <h1>Your Groups</h1>
 <ul>
     {% for group in groups %}
-        <li>{{ group.groupName }}</li>
-    {% endfor %}
-</ul>
-
-<h1>Group Announcements</h1>
-<ul>
-    {% for announcement in announcements %}
         <li>
-            <strong>{{ announcement.announce }}</strong> 
-            (Posted by {{ announcement.teacher.name }} in {{ announcement.group.groupName }} on {{ announcement.timestamp }} it ends on {{announcement.enddate}})
+            <a href="{% url 'group_announcements' group.groupId %}">{{ group.groupName }}</a>
         </li>
     {% endfor %}
 </ul>
 
-{% if not announcements %}
-    <p>No announcements found.</p>
-{% endif %}
+<!-- Logout Button -->
+<form action="{% url 'logout' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>

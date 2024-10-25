@@ -116,25 +116,45 @@ def delete_task(request, task_id):
     return redirect('todo_list')
 
 
-def user_groups_announcements(request):
+def user_groups_announcements(request, group_id=None):
     # Get the logged-in user
     user = request.user
 
-    # Get the groups the user belongs to (assuming the user is a student)
+    # Get all groups the user belongs to
     groups = Group.objects.filter(students=user.student)
 
-    # Get announcements for these groups
-    announcements = Announcement.objects.filter(group__in=groups).order_by('-timestamp')
+    # If a group ID is provided, filter announcements for that group
+    announcements = None
+    if group_id:
+        group = get_object_or_404(groups, groupId=group_id)
+        announcements = Announcement.objects.filter(group=group).order_by('-timestamp')
+    else:
+        group = None
 
-    # Pass the groups and announcements to the template
     context = {
         'groups': groups,
+        'group': group,
         'announcements': announcements,
     }
 
     return render(request, 'announcement.html', context)
 
 
+def group_announcements(request, group_id):
+    # Get the group the user is trying to access
+    group = get_object_or_404(Group, groupId=group_id)
+    
+    # Get announcements for the group, ordered by timestamp
+    announcements = Announcement.objects.filter(group=group).order_by('-timestamp')
+
+    context = {
+        'group': group,
+        'announcements': announcements,
+    }
+
+    return render(request, 'group_announcements.html', context)
+
+    
 def seller_items(request):
     # Group items by category (assuming category is stored as a CharField)
     items_by_category = {}

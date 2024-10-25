@@ -1,4 +1,17 @@
-<h2>Groups Created by {{ request.user.teacher.name }}</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+   <!--=============== REMIXICONS ===============-->
+   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+ 
+  <title>Responsive navigation bar - Bedimcode</title>
+</head>
+   
+
+  <h2>Groups Created by {{ request.user.teacher.name }}</h2>
 <ul>
   {% if groups %}
     {% for group in groups %}
@@ -8,3 +21,5 @@
     <li>No groups found.</li>
   {% endif %}
 </ul>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- group_announcements.html -->
+<h1>Announcements for {{ group.groupName }}</h1>
+
+<ul>
+    {% for announcement in announcements %}
+        <li>
+            <strong>{{ announcement.announce }}</strong>
+            <p>Posted by {{ announcement.teacher.name }} on {{ announcement.timestamp }}; ends on {{ announcement.enddate }}</p>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if not announcements %}
+    <p>No announcements found for this group.</p>
+{% endif %}
+
+<a href="{% url 'user_groups_announcements' %}">Back to all groups</a>
