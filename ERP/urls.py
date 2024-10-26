@@ -5,7 +5,8 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 
-urlpatterns = [
+
+urlpatterns =  [
     path('home/', views.say_truth, name="home"),
     path('', views.user_login, name="login"),
     path('register/', views.register_student, name="sregister"),
@@ -22,4 +23,4 @@ urlpatterns = [
     path('create-announcement/', views.create_announcement, name='create_announcement'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Add logout URL
 
-]
+] 
