@@ -246,3 +246,19 @@ def create_announcement(request):
 @login_required
 def baseTemplate(request):
     return render(request, 'index.html')
+
+
+@login_required
+def user_detail(request):
+    # Check if the user is a student or teacher
+    if hasattr(request.user, 'student'):
+        user_type = 'student'
+        user_detail = request.user.student
+    elif hasattr(request.user, 'teacher'):
+        user_type = 'teacher'
+        user_detail = request.user.teacher
+    else:
+        user_type = 'none'
+        user_detail = None
+
+    return render(request, 'user_detail.html', {'user_type': user_type, 'user_detail': user_detail})

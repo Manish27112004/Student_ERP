@@ -649,43 +649,38 @@
                 </li>
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="index.html">
+                        <a href="{% url 'user_groups_announcements' %}">
                             <i class='bx bx-home icon' ></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="todo.html">
+                        <a href="{% url 'todo_list' %}">
                             <i class='bx bx-edit icon' ></i>
                             <span class="text nav-text">To-Do List</span>
                         </a>
                     </li>
+                </li>
+                <li class="nav-link">
+                    <a href="calendar.html">
+                        <i class='bx bx-calendar icon' ></i>
+                        <span class="text nav-text">Calendar</span>
+                    </a>
+                </li>
                     <li class="nav-link">
-                        <a href="calendar.html">
-                            <i class='bx bx-calendar icon' ></i>
-                            <span class="text nav-text">Calendar</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="data.html">
-                            <i class='bx bx-data icon' ></i>
-                            <span class="text nav-text">Data</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="store.html">
+                        <a href="{% url 'store_view' %}">
                             <i class='bx bx-book-reader icon'></i>
                             <span class="text nav-text">Book Store</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="stationery.html">
+                        <a href="{% url 'stationary' %}">
                             <i class='bx bx-store icon' ></i>
                             <span class="text nav-text">Stationery</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="settings.html">
+                        <a href="{% url 'user_detail' %}">
                             <i class='bx bx-cog icon' ></i>
                             <span class="text nav-text">Settings</span>
                         </a>
@@ -695,10 +690,16 @@
 
             <div class="bottom-content">
                 <li class="">
-                    <a href="#">
-                        <i class='bx bx-log-out icon' ></i>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class='bx bx-log-out icon'></i>
                         <span class="text nav-text">Logout</span>
                     </a>
+                    
+                    <!-- Hidden Logout Form -->
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                    
                 </li>
 
                 <li class="mode">
@@ -771,62 +772,8 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="container">
-                {% for category, category_items in items_by_category.items %}
-                <div class="category">
-                    <h2 class="category-title">{{ category }}</h2> <!-- Display the category name -->
-                    <div class="items-container">
-                        {% for item in category_items %}
-                        <div class="item-card">
-                            <div class="item-image">
-                                {% if item.image %}
-                                    <img src="{{ item.image.url }}" alt="{{ item.itemName }}">
-                                {% else %}
-                                    <p class="no-image">No Image Available</p>
-                                {% endif %}
-                            </div>
-                            <div class="item-name">{{ item.itemName }}</div>
-                            <div class="item-price">Price: ₹{{ item.price }}</div>
-                            <div class="seller-info">
-                                Seller: {{ item.seller.name }}<br>
-                                Contact: {{ item.seller.contact_info }}<br>
-                                UPI ID: {{ item.seller.upiId }}
-                            </div>
-                            <button class="buy-btn">Buy Now</button>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="container">
-                {% for category, category_items in items_by_category.items %}
-                <div class="category">
-                    <h2 class="category-title">{{ category }}</h2> <!-- Display the category name -->
-                    <div class="items-container">
-                        {% for item in category_items %}
-                        <div class="item-card">
-                            <div class="item-image">
-                                {% if item.image %}
-                                    <img src="{{ item.image.url }}" alt="{{ item.itemName }}">
-                                {% else %}
-                                    <p class="no-image">No Image Available</p>
-                                {% endif %}
-                            </div>
-                            <div class="item-name">{{ item.itemName }}</div>
-                            <div class="item-price">Price: ₹{{ item.price }}</div>
-                            <div class="seller-info">
-                                Seller: {{ item.seller.name }}<br>
-                                Contact: {{ item.seller.contact_info }}<br>
-                                UPI ID: {{ item.seller.upiId }}
-                            </div>
-                            <button class="buy-btn">Buy Now</button>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+           
+            
         </section>
 
         <section class="newsletter" data-aos="fade-down">

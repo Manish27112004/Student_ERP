@@ -1,520 +1,674 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Seller Items</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.4.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <title>Document</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        *{
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-behavior: smooth;
+        }
+        :root{
+            --body-color: #e4e9f7;
+            --sidebar-color: #fff;
+            --primary-color: #695cfe;
+            --primary-color-light: #e4e9f7;
+            --toggle-color: #ddd;
+            --text-color: #7742eb;
+            --second-color: #ffffff;
+            --other-color: #87b0d9;
+            --bg-color: #ffffff;
+            --text2-color: #000000;
+            --main-color: #f0f0f0;
 
-        /* Modal container */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-}
+            --tran-02: all 0.2s ease;
+            --tran-03: all 0.3s ease;
+            --tran-04: all 0.4s ease;
+            --tran-05: all 0.5s ease;
 
-/* Modal content */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-}
+            --h1-font: 4.5rem;
+            --h2-font: 3.5rem;
+            --p-font: 1rem;
+        }
 
-/* Close button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+        body{
+            height: 100vh;
+            background: var(--body-color);
+            transition: var(--tran-05);
+        }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-         /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-/*=============== VARIABLES CSS ===============*/
-:root {
---header-height: 3.5rem;
-/*========== Colors ==========*/
-/*Color mode HSL(hue, saturation, lightness)*/
---first-color: hsl(220, 68%, 54%);
---first-color-lighten: hsl(220, 68%, 97%);
---title-color: hsl(220, 48%, 28%);
---text-color: hsl(220, 12%, 45%);
---body-color: hsl(220, 100%, 99%);
-/*========== Font and typography ==========*/
-/*.5rem = 8px | 1rem = 16px ...*/
---body-font: "Poppins", sans-serif;
---normal-font-size: .938rem;
---small-font-size: .813rem;
---smaller-font-size: .75rem;
-/*========== Font weight ==========*/
---font-medium: 500;
---font-semi-bold: 600;
-/*========== z index ==========*/
---z-tooltip: 10;
---z-fixed: 100;
-}
-@media screen and (min-width: 1024px) {
-:root {
---normal-font-size: 1rem;
---small-font-size: .875rem;
---smaller-font-size: .813rem;
-}
-}
+        body.dark{
+            --body-color: #18191a;
+            --sidebar-color: #242526;
+            --primary-color: #77797a;
+            --primary-color-light: #3a3b3c;
+            --toggle-color: #fff;
+            --text-color: #e5ddeb;
+            --bg-color: #242526;
+            --text2-color: #fff;
+            --other-color: #68604b;
+        }
 
-/*=============== BASE ===============*/
-* {
-box-sizing: border-box;
-padding: 0;
-margin: 0;
-}
+        .sidebar .text{
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: var(--tran-03);
+            white-space: nowrap;
+            opacity: 1;
+        }
 
-body {
-font-family: var(--body-font);
-font-size: var(--normal-font-size);
-background-color: var(--body-color);
-color: var(--text-color);
-}
+        .sidebar .image{
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-ul {
-list-style: none;
-}
+        .sidebar{
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            padding: 10px 14px;
+            background: var(--sidebar-color);
+            transition: var(--tran-05);
+            z-index: 100;
+        }
 
-a {
-text-decoration: none;
-}
+        .sidebar.close{
+            width: 88px;
+        }
 
-/*=============== REUSABLE CSS CLASSES ===============*/
-.container {
-max-width: 1120px;
-margin-inline: 1.5rem;
-}
+        .sidebar.close .text{
+            opacity: 0;
+        }
 
-/*=============== HEADER ===============*/
-.header {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-box-shadow: 0 2px 8px hsla(220, 68%, 12%, 0.1);
-background-color: var(--body-color);
-z-index: var(--z-fixed);
-}
+        .sidebar li{
+            height: 50px;
+            margin-top: 10px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
 
-/*=============== NAV ===============*/
-.nav {
-height: var(--header-height);
-}
-.nav__data {
-height: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-.nav__logo {
-display: inline-flex;
-align-items: center;
-column-gap: 0.25rem;
-color: var(--title-color);
-font-weight: var(--font-semi-bold);
-transition: color 0.3s;
-}
-.nav__logo i {
-font-size: 1.25rem;
-}
-.nav__logo:hover {
-color: var(--first-color);
-}
-.nav__toggle {
-position: relative;
-width: 32px;
-height: 32px;
-}
-.nav__toggle-menu, .nav__toggle-close {
-font-size: 1.25rem;
-color: var(--title-color);
-position: absolute;
-display: grid;
-place-items: center;
-inset: 0;
-cursor: pointer;
-transition: opacity 0.1s, transform 0.4s;
-}
-.nav__toggle-close {
-opacity: 0;
-}
-@media screen and (max-width: 1118px) {
-.nav__menu {
-background-color: var(--body-color);
-position: absolute;
-left: 0;
-top: 2.5rem;
-width: 100%;
-height: calc(100vh - 3.5rem);
-overflow: auto;
-padding-block: 1.5rem 4rem;
-pointer-events: none;
-opacity: 0;
-transition: top 0.4s, opacity 0.3s;
-}
-.nav__menu::-webkit-scrollbar {
-width: 0.5rem;
-}
-.nav__menu::-webkit-scrollbar-thumb {
-background-color: hsl(220, 12%, 70%);
-}
-}
-.nav__link {
-color: var(--title-color);
-font-weight: var(--font-semi-bold);
-padding: 1.25rem 1.5rem;
-display: flex;
-justify-content: space-between;
-align-items: center;
-transition: background-color 0.3s;
-}
-.nav__link:hover {
-background-color: var(--first-color-lighten);
-}
+        .sidebar li .icon{
+            min-width: 60px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* Show menu */
-.show-menu {
-opacity: 1;
-top: 3.5rem;
-pointer-events: initial;
-}
+        .sidebar li .icon,
+        .sidebar li .text{
+            color: var(--text-color);
+            transition: var(--tran-02);
+        }
 
-/* Show icon */
-.show-icon .nav__toggle-menu {
-opacity: 0;
-transform: rotate(90deg);
-}
+        .sidebar header{
+            position: relative;
+        }
 
-.show-icon .nav__toggle-close {
-opacity: 1;
-transform: rotate(90deg);
-}
+        .sidebar .image-text img{
+            width: 55px;
+            border-radius: 6px;
+        }
 
-/*=============== DROPDOWN ===============*/
-.dropdown__button {
-cursor: pointer;
-}
-.dropdown__arrow {
-font-size: 1.5rem;
-font-weight: initial;
-transition: transform 0.4s;
-}
-.dropdown__content, .dropdown__group, .dropdown__list {
-display: grid;
-}
-.dropdown__container {
-background-color: var(--first-color-lighten);
-height: 0;
-overflow: hidden;
-transition: height 0.4s;
-}
-.dropdown__content {
-row-gap: 1.75rem;
-}
-.dropdown__group {
-padding-left: 2.5rem;
-row-gap: 0.5rem;
-}
-.dropdown__group:first-child {
-margin-top: 1.25rem;
-}
-.dropdown__group:last-child {
-margin-bottom: 1.25rem;
-}
-.dropdown__icon i {
-font-size: 1.25rem;
-color: var(--first-color);
-}
-.dropdown__title {
-font-size: var(--small-font-size);
-font-weight: var(--font-semi-bold);
-color: var(--title-color);
-}
-.dropdown__list {
-row-gap: 0.25rem;
-}
-.dropdown__link {
-font-size: var(--smaller-font-size);
-font-weight: var(--font-medium);
-color: var(--text-color);
-transition: color 0.3s;
-}
-.dropdown__link:hover {
-color: var(--title-color);
-}
+        .sidebar header .image-text{
+            display: flex;
+            align-items: center;
+        }
 
-/* Rotate dropdown icon */
-.show-dropdown .dropdown__arrow {
-transform: rotate(180deg);
-}
+        header .image-text .header-text{
+            display: flex;
+            flex-direction: column;
+        }
 
-/*=============== BREAKPOINTS ===============*/
-/* For small devices */
-@media screen and (max-width: 300px) {
-.dropdown__group {
-padding-left: 1.5rem;
-}
-}
-/* For large devices */
-@media screen and (min-width: 1118px) {
-/* Nav */
-.nav {
-height: calc(var(--header-height) + 2rem);
-display: flex;
-justify-content: space-between;
-}
-.nav__toggle {
-display: none;
-}
-.nav__list {
-display: flex;
-column-gap: 3rem;
-height: 100%;
-}
-.nav li {
-display: flex;
-}
-.nav__link {
-padding: 0;
-}
-.nav__link:hover {
-background-color: initial;
-}
-/* Dropdown */
-.dropdown__button {
-column-gap: 0.25rem;
-pointer-events: none;
-}
-.dropdown__container {
-height: max-content;
-position: absolute;
-left: 0;
-right: 0;
-top: 6.5rem;
-background-color: var(--body-color);
-box-shadow: 0 6px 8px hsla(220, 68%, 12%, 0.05);
-pointer-events: none;
-opacity: 0;
-transition: top 0.4s, opacity 0.3s;
-}
-.dropdown__content {
-grid-template-columns: repeat(4, max-content);
-column-gap: 6rem;
-max-width: 1120px;
-margin-inline: auto;
-}
-.dropdown__group {
-padding: 4rem 0;
-align-content: baseline;
-row-gap: 1.25rem;
-}
-.dropdown__group:first-child, .dropdown__group:last-child {
-margin: 0;
-}
-.dropdown__list {
-row-gap: 0.75rem;
-}
-.dropdown__icon {
-width: 60px;
-height: 60px;
-background-color: var(--first-color-lighten);
-border-radius: 50%;
-display: grid;
-place-items: center;
-margin-bottom: 1rem;
-}
-.dropdown__icon i {
-font-size: 2rem;
-}
-.dropdown__title {
-font-size: var(--normal-font-size);
-}
-.dropdown__link {
-font-size: var(--small-font-size);
-}
-.dropdown__link:hover {
-color: var(--first-color);
-}
-.dropdown__item {
-cursor: pointer;
-}
-.dropdown__item:hover .dropdown__arrow {
-transform: rotate(180deg);
-}
-.dropdown__item:hover > .dropdown__container {
-top: 5.5rem;
-opacity: 1;
-pointer-events: initial;
-cursor: initial;
-}
-}
-@media screen and (min-width: 1152px) {
-.container {
-margin-inline: auto;
-}
-}
+        .header-text .name{
+            font-weight: 600;
+        }
+
+        .sidebar header .toggle{
+            position: absolute;
+            top: 50%;
+            right: -25px;
+            transform: translateY(-50%) rotate(180deg);
+            height: 25px;
+            width: 25px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--sidebar-color);
+            font-size: 22px;
+            transition: var(--tran-03);
+        }
+
+        .sidebar.close header .toggle{
+            transform: translateY(-50%);
+        }
+
+        body.dark .sidebar header .toggle{
+            color: var(--text-color);
+        }
+
+        .sidebar .menu{
+            margin-top: 35px;
+        }
+
+        .sidebar .search-box{
+            background: var(--primary-color-light);
+            border-radius: 6px;
+            transition: var(--tran-05);
+        }
+
+        .search-box input{
+            height: 100%;
+            width: 100%;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            background: var(--primary-color-light);
+        }
+
+        .sidebar li a{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: var(--tran-04);
+        }
+
+        .sidebar li a:hover{
+            background: var(--primary-color);
+        }
+
+        .sidebar li a:hover .icon,
+        .sidebar li a:hover .text{
+            color: var(--sidebar-color);
+        }
+
+        body.dark .sidebar li a:hover .icon,
+        body.dark .sidebar li a:hover .text{
+            color: var(--text-color);
+        }
+
+        .sidebar .menu-bar{
+            height: calc(100% - 50px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-bar .mode{
+            position: relative;
+            background: var(--primary-color-light);
+            border-radius: 6px;
+        }
+
+        .menu-bar .mode .moon-sun{
+            height: 50px;
+            width: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-bar .mode i{
+            position: absolute;
+            transition: var(--tran-03);
+        }
+
+        .menu-bar .mode i.moon{
+            opacity: 0;
+        }
+
+        body.dark .menu-bar .mode i.moon{
+            opacity: 1;
+        }
+
+        body.dark .menu-bar .mode i.sun{
+            opacity: 0;
+        }
+
+        .menu-bar .mode .toggle-switch{
+            position: absolute;
+            right: 0;
+            height: 100%;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 6px;
+            background: var(--primary-color-light);
+            transition: var(--tran-05);
+        }
+
+        .toggle-switch .switch{
+            position: relative;
+            height: 22px;
+            width: 44px;
+            border-radius: 25px;
+            background: var(--toggle-color);
+        }
+
+        .switch::before{
+            content: '';
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            background: var(--sidebar-color);
+            transition: var(--tran-03);
+        }
+
+        body.dark .switch::before{
+            left: 24px;
+        }
+
+        .home{
+            position: relative;
+            left: 250px;
+            height: 100vh;
+            width: calc(100% - 250px);
+            transition: var(--tran-05);
+            background: var(--body-color);
+        }
+
+        .home .text{
+            font-size: 30px;
+            font-weight: 500;
+            color: var(--text-color);
+            padding: 8px 40px;
+        }
+
+        .sidebar.close ~ .home{
+            left: 88px;
+            width: calc(100% - 88px);
+        }
+
+        .home header{
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: inherit;
+            box-shadow: 0 1px 6px 0 rgb(32, 33, 36 / 5%);
+            padding: 18px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color);
+            flex-wrap: wrap;
+        }
+
+        .home .logo{
+            font-size: 33px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-color);
+            font-family: 'Times New Roman', Times, serif;
+            margin-right: 40%;
+        }
+
+        .home .nav-right{
+            display: flex;
+            align-items: center;   
+            margin-left: 30%;        
+        }
+
+        .home .nav-right a{
+            display: inline-block;
+            font-size: 22px;
+            color: var(--text-color);
+            margin: 0 20px;
+            transition: all .6s; 
+        }
+
+        .home .nav-right a:hover{
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .home section{
+            padding: 90px 14% 70px;
+        }
+
+        .main{
+            position: inherit;
+            height: 95vh;
+            width: 100%;
+            background: url(tree.png);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 75px;
+            flex-wrap: wrap;
+            list-style-type: none;
+        }
+
+        .main-text{
+            padding-top: 40px;
+        }
+
+        .main-text h1{
+            font-size: var(--h1-font);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--text2-color);
+        }
+
+        .main-text h6{
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text2-color);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .main-text p{
+            width: 100%;
+            max-width: 560px;
+            font-size: var(--p-font);
+            font-weight: 400;
+            color: var(--text2-color);
+            line-height: 33px;
+            margin-bottom: 35px;
+        }
+
+        .main .btn{
+            display: inline-block;
+            padding: 14px 42px;
+            background: var(--text-color);
+            color: var(--bg-color);
+            font-size: 15px;
+            font-weight: 500;
+            border: 2px solid transparent;
+            transition: all .6s;
+        }
+
+        .main .btn:hover{
+            transform: scale(0.9) translateY(-6px);
+            border: 2px solid var(--text-color);
+            background: transparent;
+            color: var(--text-color);
+        }
+
+        .main .btn i{
+            margin-left: 9px;
+        }
+
+        .n-product{
+            position: inherit;
+        }
+
+        .n-product .center-text{
+            text-align: center;
+        }
+
+        .n-product .center-text h2{
+            font-size: var(--h2-font);
+            font-weight: 700;
+            color: var(--text2-color);
+        }
+
+        @media screen and (min-width: 1152px) {
+            .container {
+            margin-inline: auto;
+            }
+            }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--body-color);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text2-color);
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+
+        .category-title {
+            font-size: 24px;
+            color: var(--text2-color);
+            margin-bottom: 20px;
+        }
+
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .item-card {
+            background-color: var(--text-color);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .item-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .seller-info {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: #218838;
+        }
+
+        .no-image {
+            font-style: italic;
+            color: var(--text2-color);
+        }
+
+        .modal{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content{
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            position: relative;          
+        }
+
+        .model .close{
+            position: fixed;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;          
+        }
+
+       
     </style>
-<title>Responsive navigation bar - Bedimcode</title>
 </head>
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="logo.png" alt="logo">
+                </span>
 
-      <body>
-        <!--=============== HEADER ===============-->
-        <header class="header">
-            <nav class="nav container">
-                <div class="nav__data">
-                    <a href="#" class="nav__logo">
-                        <i class="ri-code-s-slash-line"></i> CodeBox
+                <div class="text header-text">
+                    <span class="name">Student ERP</span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle' ></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+                    <i class='bx bx-search icon' ></i>
+                        <input type="text" placeholder="Search..">
+                </li>
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="{% url 'user_groups_announcements' %}">
+                            <i class='bx bx-home icon' ></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'todo_list' %}">
+                            <i class='bx bx-edit icon' ></i>
+                            <span class="text nav-text">To-Do List</span>
+                        </a>
+                    </li>
+                </li>
+                <li class="nav-link">
+                    <a href="calendar.html">
+                        <i class='bx bx-calendar icon' ></i>
+                        <span class="text nav-text">Calendar</span>
                     </a>
-    
-                    <div class="nav__toggle" id="nav-toggle">
-                        <i class="ri-menu-line nav__toggle-menu"></i>
-                        <i class="ri-close-line nav__toggle-close"></i>
+                </li>
+                    <li class="nav-link">
+                        <a href="{% url 'store_view' %}">
+                            <i class='bx bx-book-reader icon'></i>
+                            <span class="text nav-text">Book Store</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'stationary' %}">
+                            <i class='bx bx-store icon' ></i>
+                            <span class="text nav-text">Stationery</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'user_detail' %}">
+                            <i class='bx bx-cog icon' ></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class='bx bx-log-out icon'></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                    
+                    <!-- Hidden Logout Form -->
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                    
+                </li>
+
+                <li class="mode">
+                    <div class="moon-sun">
+                        <i class='bx bx-moon icon moon' ></i>
+                        <i class='bx bx-sun icon sun' ></i>
                     </div>
-                </div>
+                    <span class="mode-text text">Dark Mode</span>
 
-                <!--=============== NAV MENU ===============-->
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li>
-                            <a href="{% url 'user_groups_announcements' %}" class="nav__link">Home</a>
-                        </li>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </nav> 
 
-                        <!--=============== DROPDOWN 1 ===============-->
-                        <li class="dropdown__item">                      
-                            <div class="nav__link dropdown__button">
-                                Data <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                            </div>
 
-                            <div class="dropdown__container">
-                                <div class="dropdown__content">
-                                    <div class="dropdown__group">
-                                        <div class="dropdown__icon">
-                                            <i class="ri-flashlight-line"></i>
-                                        </div>
-                                        <a href="{% url 'todo_list' %}" class="dropdown__title">To-Do List</a>    
+    <section class="home">
+        <header>
+            <a href="#" class="logo">Stationery</a>
+            
+            <div class="nav-right">
+                <a href="#"><i class="ri-search-line"></i></a>
+                <a href="#"><i class="ri-shopping-cart-line"></i></a>
+            </div>
+        </header>
 
-                                    </div>
-    
-                                    <div class="dropdown__group">
-                                        <div class="dropdown__icon">
-                                            <i class="ri-heart-3-line"></i>
-                                        </div>
-    
-                                        <a href="{% url 'todo_list' %}" class="dropdown__title">Calendar</a> 
-    
-                                        
-                                    </div>
-    
-                                    <div class="dropdown__group">
-                                        <div class="dropdown__icon">
-                                            <i class="ri-book-mark-line"></i>
-                                        </div>
-    
-                                        <span class="dropdown__title">Careers</span>
-    
-                                        
-                                    </div>
-    
-                                    <div class="dropdown__group">
-                                        <div class="dropdown__icon">
-                                            <i class="ri-file-paper-2-line"></i>
-                                        </div>
-    
-                                        <span class="dropdown__title">Certifications</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+        <section class="main">
+            <div class="main-text" data-aos="fade-up">
+                <h6>Stationery</h6>
+                <h1>Organize, Create, Inspire <br>Your Perfect Stationery</h1>
+                <p>Discover essentials that make it easy to stay organized and inspired. Our stationery is thoughtfully designed for all your note-taking, planning, and creative needs.</p>
+                <a href="#" class="btn">
+                    Shop now
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+        </section>
 
-                        <!--=============== DROPDOWN 2 ===============-->
-                        <li class="dropdown__item">
-                            <div class="nav__link dropdown__button">
-                                Store <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                            </div>
-
-                            <div class="dropdown__container">
-                                <div class="dropdown__content">
-                                    <div class="dropdown__group">
-                                        <div class="dropdown__icon">
-                                            <i class="ri-code-line"></i>
-                                        </div>
-    
-                                        <a href="{% url 'store_view' %}" class="dropdown__title">Book Store</a>   
-
-                                    </div>
-    
-                                    <div class="dropdown__group">
-                                        <div class="dropdown__icon">
-                                            <i class="ri-pen-nib-line"></i>
-                                        </div>
-    
-                                        <a href="{% url 'stationary' %}" class="dropdown__title">Stationery</a>   
-                                    </div>
-    
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!--=============== DROPDOWN 3 ===============-->
-                        <li class="dropdown__item">                        
-                            <div class="nav__link dropdown__button">
-                                Settings 
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <button id="addBookBtn" class="btn">Add Book</button>
-    <h1>Items for Sale</h1>
-    <table border="1">
-        <tr>
-            <th>Item Image</th>
-            <th>Item Name</th>
-            <th>Price</th>
-            <th>Seller Name</th>
-            <th>Seller Contact</th>
-            <th>UPI ID</th>
-            <th>Description</th>
-        </tr>
-        {% for item in items %}
-        <tr>
-            <td>
-                {% if item.image %}
-                    <img src="{{ item.image.url }}" alt="{{ item.itemName }}" width="100" height="100">
-                {% else %}
-                    <p>No Image</p>
-                {% endif %}
-            </td>
-            <td>{{ item.bookName }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.seller.name }}</td>
-            <td>{{ item.seller.phoneNo }}</td>
-            <td>{{ item.seller.upiId }}</td>
-            <td>{{ item.desc}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-        <!-- Modal Popup for Add Book Form -->
         <div id="addBookModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -534,116 +688,133 @@ margin-inline: auto;
                     <label for="description"> Description: </label>
                     <input type="text" name="desc" id="desc" >
                     
-                    <button type="submit">Submit</button>
+                    <button id="submit" type="submit">Submit</button>
                 </form>
             </div>
         </div>
-    </body>
-    </html>
 
-    <script>
-        /*=============== SHOW MENU ===============*/
-    const showMenu = (toggleId, navId) =>{
-        const toggle = document.getElementById(toggleId),
-              nav = document.getElementById(navId)
-     
-        toggle.addEventListener('click', () =>{
-            // Add show-menu class to nav menu
-            nav.classList.toggle('show-menu')
-            // Add show-icon to show and hide menu icon
-            toggle.classList.toggle('show-icon')
-        })
-     }
-     
-     showMenu('nav-toggle','nav-menu')
-     
-     /*=============== SHOW DROPDOWN MENU ===============*/
-     const dropdownItems = document.querySelectorAll('.dropdown__item')
-     
-     // 1. Select each dropdown item
-     dropdownItems.forEach((item) =>{
-         const dropdownButton = item.querySelector('.dropdown__button') 
-     
-         // 2. Select each button click
-         dropdownButton.addEventListener('click', () =>{
-             // 7. Select the current show-dropdown class
-             const showDropdown = document.querySelector('.show-dropdown')
-             
-             // 5. Call the toggleItem function
-             toggleItem(item)
-     
-             // 8. Remove the show-dropdown class from other items
-             if(showDropdown && showDropdown!== item){
-                 toggleItem(showDropdown)
-             }
-         })
-     })
-     
-     // 3. Create a function to display the dropdown
-     const toggleItem = (item) =>{
-         // 3.1. Select each dropdown content
-         const dropdownContainer = item.querySelector('.dropdown__container')
-     
-         // 6. If the same item contains the show-dropdown class, remove
-         if(item.classList.contains('show-dropdown')){
-             dropdownContainer.removeAttribute('style')
-             item.classList.remove('show-dropdown')
-         } else{
-             // 4. Add the maximum height to the dropdown content and add the show-dropdown class
-             dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px'
-             item.classList.add('show-dropdown')
-         }
-     }
-     
-     /*=============== DELETE DROPDOWN STYLES ===============*/
-     const mediaQuery = matchMedia('(min-width: 1118px)'),
-           dropdownContainer = document.querySelectorAll('.dropdown__container')
-     
-     // Function to remove dropdown styles in mobile mode when browser resizes
-     const removeStyle = () =>{
-         // Validate if the media query reaches 1118px
-         if(mediaQuery.matches){
-             // Remove the dropdown container height style
-             dropdownContainer.forEach((e) =>{
-                 e.removeAttribute('style')
-             })
-     
-             // Remove the show-dropdown class from dropdown item
-             dropdownItems.forEach((e) =>{
-                 e.classList.remove('show-dropdown')
-             })
-         }
-     }
-     
-     addEventListener('resize', removeStyle)
-     
-    </script>
+        <section class="n-product">
+            <div class="center-text" data-aos="fade-down">
+                <h2>All Products</h2>
+            </div>
+            <button id="addBookBtn" class="btn">Add Book</button>
+    <h1>Items for Sale</h1>
+    <div class="container" data-aos="zoom-in">
+        <div class="items-container">
+            {% for item in items %}
+            <div class="item-card">
+                <div class="item-image">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.bookName }}" width="100" height="100">
+                    {% else %}
+                        <p class="no-image">No Image Available</p>
+                    {% endif %}
+                </div>
+                <div class="item-name">{{ item.bookName }}</div>
+                <div class="item-price">Price: ₹{{ item.price }}</div>
+                <div class="seller-info">
+                    <p>Seller: {{ item.seller.name }}</p>
+                    <p>Contact: {{ item.seller.phoneNo }}</p>
+                    <p>UPI ID: {{ item.seller.upiId }}</p>
+                </div>
+                <div class="item-description">
+                    <p>{{ item.desc }}</p>
+                </div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+ 
+
+
+    </section>
     
     <script>
-        // Get modal element
-        const modal = document.getElementById("addBookModal");
-    
-        // Get open modal button
-        const addBookBtn = document.getElementById("addBookBtn");
-    
-        // Get close button
-        const closeBtn = document.querySelector(".close");
-    
-        // Listen for open click
-        addBookBtn.addEventListener("click", () => {
-            modal.style.display = "block";
-        });
-    
-        // Listen for close click
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-        });
-    
-        // Close modal if outside click
-        window.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
+        const body = document.querySelector("body"),
+              sidebar = body.querySelector(".sidebar"),
+              toggle = body.querySelector(".toggle"),
+              searchBtn = body.querySelector(".search-box"),
+              modeToggle = body.querySelector(".toggle-switch"),
+              modeText = body.querySelector(".mode-text");
+              
+
+
+              toggle.addEventListener("click", () =>{
+                sidebar.classList.toggle("close");
+              });
+
+              searchBtn.addEventListener("click", () =>{
+                sidebar.classList.remove("close");
+              });
+               // Check the stored mode on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const body = document.body;
+            const modeToggle = document.querySelector('.toggle-switch');
+
+            // Get the stored theme from localStorage
+            const darkMode = localStorage.getItem('darkMode');
+
+            if (darkMode === 'enabled') {
+                body.classList.add('dark');
             }
+
+            // Toggle dark mode and store the preference
+            modeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark');
+
+                if (body.classList.contains('dark')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                    modeText.innerText = "Dark Mode"
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                    modeText.innerText = "Light Mode"
+                }
+            });
         });
+
+
+        // Get modal element
+            const modal = document.getElementById("addBookModal");
+        
+            // Get open modal button
+            const addBookBtn = document.getElementById("addBookBtn");
+        
+            // Get close button
+            const closeBtn = document.querySelector(".close");
+        
+            // Listen for open click
+            addBookBtn.addEventListener("click", () => {
+                modal.style.display = "block";
+            });
+        
+            // Listen for close click
+            closeBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+        
+            // Close modal if outside click
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+
+            function openPopup() {
+                document.getElementById("addBookModal").style.display = "flex";
+              }
+
+            function closePopup() {
+                document.getElementById("submit").style.display = "none";
+              }
     </script>
-    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+          AOS.init({
+            offset: 300,
+            duration: 1450,
+          });
+        </script>
+
+</body>
+</html>

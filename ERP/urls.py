@@ -22,5 +22,6 @@ urlpatterns =  [
     path('group-list/', views.group_list, name='group_list'),  # Add this URL pattern
     path('create-announcement/', views.create_announcement, name='create_announcement'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Add logout URL
+    path('user_detail/', views.user_detail, name='user_detail'),
 
 ] 
