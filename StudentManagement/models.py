@@ -96,11 +96,12 @@ class Calender(models.Model):
 
 
 class BookIssueStore(models.Model):
-    price = models.SmallIntegerField()
+    #price = models.SmallIntegerField()
     bookName = models.CharField(max_length= 255)
     price = models.DecimalField(max_digits= 6, decimal_places= 2)
     image = models.ImageField(upload_to='item_images/')  # Customize the upload path...This argument specifies the directory within your media root where uploaded images will be saved. You'll need to configure your media settings in settings.py
     seller = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_sold')
+    desc = models.CharField(max_length= 255, null=True, blank= True)
     #buyer = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='books_bought', null=True, blank=True)
 
 

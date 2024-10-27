@@ -172,6 +172,24 @@ def seller_items(request):
 
 
 def store_view(request):
+    if request.method == 'POST':
+        book_name = request.POST.get('bookName')
+        price = request.POST.get('price')
+        image = request.FILES.get('image')
+        seller = request.user.student
+        desc = request.POST.get('desc')
+
+        # Create a new BookIssueStore instance
+        book = BookIssueStore(
+            bookName=book_name,
+            price=price,
+            image=image,
+            desc=desc,
+            seller=seller,
+        )
+        book.save()
+        return redirect('store_view')    
+    
     items = BookIssueStore.objects.all()  # Get all items in the store
     return render(request, 'store_items.html', {'items': items})
 
