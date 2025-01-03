@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from StudentManagement.models import ToDoList, Task, Group, Announcement, Stationary, Student, BookIssueStore, Teacher
-from StudentManagement.forms import TaskForm, GroupForm, AnnouncementForm
+from .models import ToDoList, Task, Group, Announcement, Stationary, Student, BookIssueStore, Teacher
+from .forms import TaskForm, GroupForm, AnnouncementForm
 from django.core.exceptions import PermissionDenied
 
 
@@ -262,3 +262,6 @@ def user_detail(request):
         user_detail = None
 
     return render(request, 'user_detail.html', {'user_type': user_type, 'user_detail': user_detail})
+  
+    
+     
