@@ -11,11 +11,6 @@ from .forms import TaskForm, GroupForm, AnnouncementForm
 from django.core.exceptions import PermissionDenied
 
 
-@login_required
-def say_truth(request):
-    profile_set = Student.objects.all()
-    return render(request, 'hello.html', {'students': profile_set})  # Pass the data as 'students'
-
 def user_login(request):
     if request.method == 'POST':
         username  = request.POST['username']
@@ -24,7 +19,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
             messages.success(request, "You have been Logged In.")
-            return redirect('home')
+            return redirect('todo_list')
         else:
             messages.success(request, "There was an Error")
             return redirect('login')
