@@ -10,7 +10,6 @@ urlpatterns =  [
     path('home/', views.say_truth, name="home"),
     path('', views.user_login, name="login"),
     path('register/', views.register_student, name="sregister"),
-    # Dont Need 'playground/hello' as already defined in storefronts "urls.py"
     path('todo/', views.todo_list, name='todo_list'),
     path('todo/toggle/<int:task_id>/', views.toggle_task_completion, name='toggle_task_completion'),
     path('todo/delete/<int:task_id>/', views.delete_task, name='delete_task'),
@@ -23,5 +22,5 @@ urlpatterns =  [
     path('create-announcement/', views.create_announcement, name='create_announcement'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Add logout URL
     path('user_detail/', views.user_detail, name='user_detail'),
-
+    path('calendar/',views.display_calendar, name="Calendar")
 ] 

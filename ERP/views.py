@@ -33,7 +33,6 @@ def user_login(request):
  
 def register_student(request):
     if request.method == 'POST':
-        # Extract form data from the request
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get('email')
@@ -70,7 +69,7 @@ def register_student(request):
         )
         
         # Redirect or render success page
-        return redirect('home')  # Update with your desired redirect page
+        return redirect('home') 
 
     # If the request method is GET, display the form page
     return render(request, 'register.html')
@@ -213,7 +212,7 @@ def create_group(request):
     else:
         form = GroupForm()
     
-    return render(request, 'create_group.html', {'form': form})
+    return render(request, 'create_group2.html', {'form': form})
 
 
 @login_required
@@ -243,10 +242,6 @@ def create_announcement(request):
     
     return render(request, 'create_announcement.html', {'form': form})
 
-@login_required
-def baseTemplate(request):
-    return render(request, 'index.html')
-
 
 @login_required
 def user_detail(request):
@@ -262,6 +257,11 @@ def user_detail(request):
         user_detail = None
 
     return render(request, 'user_detail.html', {'user_type': user_type, 'user_detail': user_detail})
+
+
+@login_required
+def display_calendar(request):
+   return render(request,'calendar.html')
   
     
      

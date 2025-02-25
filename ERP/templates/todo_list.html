@@ -8,8 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.4.0/fonts/remixicon.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>ToDo List</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+   <style>
+    
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         *{
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -400,99 +401,12 @@
             font-weight: bold;
             outline: none;
         }
-    </style>
+ 
+
+   </style>
 </head>
 <body>
-    <nav class="sidebar close">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <img src="logo.png" alt="logo">
-                </span>
-
-                <div class="text header-text">
-                    <span class="name">Student ERP</span>
-                </div>
-            </div>
-
-            <i class='bx bx-chevron-right toggle' ></i>
-        </header>
-
-        <div class="menu-bar">
-            <div class="menu">
-                <li class="search-box">
-                    <i class='bx bx-search icon' ></i>
-                        <input type="text" placeholder="Search..">
-                </li>
-                <ul class="menu-links">
-                    <li class="nav-link">
-                        <a href="{% url 'user_groups_announcements' %}">
-                            <i class='bx bx-home icon' ></i>
-                            <span class="text nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="{% url 'todo_list' %}">
-                            <i class='bx bx-edit icon' ></i>
-                            <span class="text nav-text">To-Do List</span>
-                        </a>
-                    </li>
-                </li>
-                <li class="nav-link">
-                    <a href="calendar.html">
-                        <i class='bx bx-calendar icon' ></i>
-                        <span class="text nav-text">Calendar</span>
-                    </a>
-                </li>
-                    <li class="nav-link">
-                        <a href="{% url 'store_view' %}">
-                            <i class='bx bx-book-reader icon'></i>
-                            <span class="text nav-text">Book Store</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="{% url 'stationary' %}">
-                            <i class='bx bx-store icon' ></i>
-                            <span class="text nav-text">Stationery</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="{% url 'user_detail' %}">
-                            <i class='bx bx-cog icon' ></i>
-                            <span class="text nav-text">Settings</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="bottom-content">
-                <li class="">
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class='bx bx-log-out icon'></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
-                    
-                    <!-- Hidden Logout Form -->
-                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
-                        {% csrf_token %}
-                    </form>
-                    
-                </li>
-
-                <li class="mode">
-                    <div class="moon-sun">
-                        <i class='bx bx-moon icon moon' ></i>
-                        <i class='bx bx-sun icon sun' ></i>
-                    </div>
-                    <span class="mode-text text">Dark Mode</span>
-
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-            </div>
-        </div>
-    </nav> 
+    {% include "sidebar.html" %}
 
     <section class="home">
         <header>
